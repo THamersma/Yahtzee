@@ -10,7 +10,7 @@ import static java.lang.Integer.parseInt;
 class YahtzeeSpel {
     private Scanner scanner = new Scanner(System.in);
     private Random rand = new Random();
-    private ArrayList<Dobbelsteen> dice = new ArrayList<Dobbelsteen>();
+    private ArrayList<Dobbelsteen> dice = new ArrayList<>();
     private int[] blokkeerArray = {0, 0, 0, 0, 0};
     private Worp worp = new Worp();
 
@@ -84,10 +84,8 @@ class YahtzeeSpel {
             String input = scanner.nextLine();
             if (input.length() > 10) {
                 System.out.println("Voer aub maximaal 5 cijfers in.");
-                continue;
             } else if (!input.contains(" ") && input.length() > 1) {
                 System.out.println("Voer aub spaties in tussen de cijfers.");
-                continue;
             } else {
                 String[] inputArray = input.split("\\s+", 5);
                 if (inputArray[0].equals("") && inputArray.length == 1) {
@@ -96,7 +94,6 @@ class YahtzeeSpel {
                 } else {
                     for (String element : inputArray) {
                         if (element.equals("")) {
-                            continue;
                         } else {
                             int charInt = parseInt(element);
                             blokkeerArray[(charInt - 1)] = 1;
