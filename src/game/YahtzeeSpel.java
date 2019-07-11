@@ -1,7 +1,6 @@
 package game;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,72 +13,84 @@ class YahtzeeSpel {
     private int[] blokkeerArray = {0, 0, 0, 0, 0};
 
     YahtzeeSpel() {
-        for(int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             dice.add(new Dobbelsteen());
         }
     }
 
     void spelen() {
-        for(Dobbelsteen element : dice) {
-            element.waarde = rand.nextInt(6) + 1;
-        }
-        System.out.print("Je hebt ");
-        for(int i = 0; i < 5; i++) {
-            if (i == 4) {
-                System.out.printf(" %3s %1d %9s", "en ", dice.get(i).waarde, "geworpen!");
-                System.out.println();
+        int aantalWorpen = 0;
+        while (true) {
+            //eeste manier die ik bedacht. Mooier dan een for loopje, maar, zover als ik weet, kan ik dan de index niet bepalen
+//            for(Dobbelsteen element : dice) {
+//                element.waarde = rand.nextInt(6) + 1;
+//            }
+            for (int i = 0; i < 5; i++) {
+                int dobbelsteenBlock = blokkeerArray[i];
+                if (dobbelsteenBlock == 0) {
+                    dice.get(i).waarde = rand.nextInt(6) + 1;
+                }
+            }
+            aantalWorpen++;
+            if (aantalWorpen == 3) {
+                reviewScore();
+                //naar eindstand functie?
+                // laat de score nog zien en geef de eindscore
+                System.out.println("Het einde is bereikt");
+                break;
             } else {
-                System.out.printf(" %1d, ", dice.get(i).waarde);
+                vastHouden();
             }
         }
     }
 
-//    void vastHouden(){
-//        //while (((input = scanner2.readLine()) != null) && (input.length()!= 0)) {
-//        System.out.println("Wil je bepaalde dobbelstenen vasthouden? Typ, per dobbelsteen, 0 of 1. 0 betekent dat je hem niet vast wil houden.");
-//        int i = 0;
-//        while( i < 5){
-//                blokkeerArray[i] = scanner.nextInt();
-//                i++;
-//            }
-//        System.out.println("Jouw antwoord was: ");
-//        }
-//
-//        void vastHouden2() {
-//        System.out.println("Wil je bepaalde dobbelstenen vasthouden? Typ, per dobbelsteen, 0 of 1. 0 betekent dat je hem niet vast wil houden.");
-//        Scanner scanner2 = new Scanner(System.in);
-//        while (scanner2.hasNext()){
-//            if (scanner2.hasNextInt())
-//                System.out.println(scanner2.nextInt());
-//            else
-//                scanner2.next();
-//        }
-//    }
-
-    void vastHouden() {
-        System.out.println("Wil je bepaalde dobbelstenen vasthouden? Typ het nummer/de nummers van de dobbelsteen/dobbelstenen die je wil houden. \nDruk daarna op enter");
+    void reviewScore(){
         System.out.println("Dit is wat je gegooid hebt: ");
         int i = 1;
         for (Dobbelsteen element : dice) {
             System.out.println("Dobbelsteen " + i + " = " + element.waarde);
             i++;
         }
+    }
 
-        String[] inputArray = scanner.nextLine().split("\\s+", 5);
-        if (inputArray[0].equals("")) {
-            System.out.println("Ok, we bewaren niets");
-        } else {
-            for (String element : inputArray) {
-                int charInt = parseInt(element);
-                blokkeerArray[(charInt - 1)] = 1;
-                System.out.println(Arrays.toString(blokkeerArray));
+    void vastHouden() {
+//        System.out.println("Wil je bepaalde dobbelstenen vasthouden? Typ het nummer/de nummers van de dobbelsteen/dobbelstenen die je wil houden. Druk daarna op enter");
+//        System.out.println("Dit is wat je gegooid hebt: ");
+//        int i = 1;
+//        for (Dobbelsteen element : dice) {
+//            System.out.println("Dobbelsteen " + i + " = " + element.waarde);
+//            i++;
+//        }
+        reviewScore();
+        System.out.println("Wil je bepaalde dobbelstenen vasthouden? Typ het nummer/de nummers van de dobbelsteen/dobbelstenen die je wil houden. Druk daarna op enter");
+        while (true) {
+            String input = scanner.nextLine();
+            if (input.length() > 10) {
+                System.out.println("Voer aub maximaal 5 cijfers in.");
+                continue;
+            } else if (!input.contains(" ") && input.length() > 1) {
+                System.out.println("Voer aub spaties in tussen de cijfers.");
+                continue;
+            } else {
+                String[] inputArray = input.split("\\s+", 5);
+                if (inputArray[0].equals("") && inputArray.length == 1) {
+                    System.out.println("Ok, we bewaren niets");
+                } else {
+                    for (String element : inputArray) {
+                        if (element.equals("")) {
+                            continue;
+                        } else {
+                            int charInt = parseInt(element);
+                            blokkeerArray[(charInt - 1)] = 1;
+                            //System.out.println(Arrays.toString(blokkeerArray));
+                        }
+                    }
+                    System.out.println("Top, doen we! OK, door naar het volgende rondje!");
+                    Main.enterToContinue();
+                    break;
+                }
             }
-
         }
-
     }
-
-
-
-    }
+}
 
