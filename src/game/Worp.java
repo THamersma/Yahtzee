@@ -1,5 +1,5 @@
 package game;
 
-public class Worp {
+class Worp {
     int[] worpen = new int[5];
 }

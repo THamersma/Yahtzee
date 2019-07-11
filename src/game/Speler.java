@@ -2,7 +2,7 @@ package game;
 
 import java.util.ArrayList;
 
-public class Speler {
+class Speler {
     ArrayList<int[]> spelerWorpen = new ArrayList<>();
     ArrayList<int[]> spelerBlocks = new ArrayList<>();
     int totalSum;

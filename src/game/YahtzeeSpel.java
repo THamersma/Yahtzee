@@ -12,8 +12,8 @@ class YahtzeeSpel {
     private Scanner scanner = new Scanner(System.in);
     private Random rand = new Random();
     private ArrayList<Dobbelsteen> dice = new ArrayList<Dobbelsteen>();
-    int[] blokkeerArray = {0, 0, 0, 0, 0};
-    Worp worp = new Worp();
+    private int[] blokkeerArray = {0, 0, 0, 0, 0};
+    private Worp worp = new Worp();
 
     YahtzeeSpel() {
         for (int i = 0; i < 5; i++) {
@@ -58,7 +58,7 @@ class YahtzeeSpel {
         }
     }
 
-    void reviewScore(Speler speler){
+    private void reviewScore(Speler speler){
         System.out.println("Dit is wat je gegooid hebt: ");
         int[] spelerX = speler.spelerWorpen.get(speler.spelerWorpen.size()-1);
         for(int i = 0 ; i < 5; i++) {
@@ -68,7 +68,7 @@ class YahtzeeSpel {
         System.out.println("Uw totaal is: " + speler.totalSum);
     }
 
-    int returnSum(int[] spelerX){
+    private int returnSum(int[] spelerX){
         int sum = 0;
         for(int i =0; i < 5; i++){
             sum += spelerX[i];
@@ -78,7 +78,7 @@ class YahtzeeSpel {
 
 
 
-    void vastHouden(Speler speler) {
+    private void vastHouden(Speler speler) {
         reviewScore(speler);
         System.out.println("Wil je bepaalde dobbelstenen vasthouden? Typ het nummer/de nummers van de dobbelsteen/dobbelstenen die je wil houden. Druk daarna op enter");
         while (true) {
